@@ -1,0 +1,25 @@
+sequenceDiagram
+    participant Client
+    participant Validator
+    participant SchemaFactory
+    participant Schema
+    participant ErrorHandler
+    
+    Client->>Validator: validate(xmlDocument)
+    Validator->>SchemaFactory: newInstance(schemaLanguage)
+    SchemaFactory-->>Validator: schemaFactory
+    Validator->>SchemaFactory: newSchema(schemaSource)
+    SchemaFactory-->>Validator: schema
+    Validator->>Validator: configureValidation()
+    Validator->>ErrorHandler: create()
+    Validator->>Schema: validate(xmlSource)
+    
+    alt Valid XML
+        Schema-->>Validator: validationSuccess
+        Validator-->>Client: return true/success
+    else Invalid XML
+        Schema->>ErrorHandler: reportError(violation)
+        ErrorHandler-->>Schema: errorHandled
+        Schema-->>Validator: validationFailure
+        Validator-->>Client: return false/exception
+    end
