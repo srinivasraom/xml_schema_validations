@@ -1,0 +1,54 @@
+classDiagram
+    class Client {
+        +validateXML()
+    }
+    
+    class XMLValidator {
+        -schemaFactory
+        -schema
+        -errorHandler
+        +validate(xmlDocument)
+        -configureValidator()
+        -handleValidationErrors()
+    }
+    
+    class SchemaFactory {
+        +newInstance(schemaLanguage)
+        +newSchema(schemaSource)
+    }
+    
+    class Schema {
+        +validate(xmlSource)
+    }
+    
+    class ErrorHandler {
+        +warning(SAXParseException)
+        +error(SAXParseException)
+        +fatalError(SAXParseException)
+    }
+    
+    class XMLDocument {
+        +sourceLocation
+        +content
+    }
+    
+    class SchemaSource {
+        +sourceLocation
+        +content
+    }
+    
+    class ValidationResult {
+        +isValid
+        +errors[]
+    }
+    
+    Client --> XMLValidator: uses
+    Client --> XMLDocument: provides
+    Client --> SchemaSource: provides
+    XMLValidator --> SchemaFactory: creates
+    XMLValidator --> Schema: obtains from SchemaFactory
+    XMLValidator --> ErrorHandler: configures
+    XMLValidator --> ValidationResult: produces
+    Schema --> XMLDocument: validates
+    Schema --> ErrorHandler: reports errors to
+    SchemaFactory --> SchemaSource: reads
