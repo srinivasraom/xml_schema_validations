@@ -1,0 +1,6 @@
+<Items>
+  <Item name="Item1"/>
+  <Item name="Item2"/>
+  <Item name="Item3"/> <!-- This will trigger maxOccurs error -->
+  <Product id="123"/> <!-- This will trigger missing attribute error -->
+</Items>

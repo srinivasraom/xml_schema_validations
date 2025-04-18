@@ -1,0 +1,10 @@
+{
+  "Item": {
+    "attributes": ["name"],
+    "maxOccurs": 2
+  },
+  "Product": {
+    "attributes": ["id", "type"],
+    "maxOccurs": 1
+  }
+}
